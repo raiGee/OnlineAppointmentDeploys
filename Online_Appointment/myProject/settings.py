@@ -55,7 +55,7 @@ ROOT_URLCONF = 'myProject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [r"C:\Users\clari\OneDrive\Desktop\GUMARANG1_AGUMBAG\templates\Appointment"],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
