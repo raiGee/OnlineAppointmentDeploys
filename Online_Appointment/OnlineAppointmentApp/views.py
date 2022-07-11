@@ -13,7 +13,7 @@ from django.template.loader import get_template
 from xhtml2pdf import pisa
 
 def Home(request):
-    return render(request,"Appointment/Home.html")
+    return render(request,"appointment/Home.html")
 
 def A_login(request):
     if request.user.is_authenticated:
@@ -30,7 +30,7 @@ def A_login(request):
             else:
                 messages.info(request,'Username/Password is incorrect')
 
-    return render(request,"Appointment/A-login.html")
+    return render(request,"appointment/A-login.html")
 
 def A_register(request):
     form = CreateUserForm()
@@ -41,7 +41,7 @@ def A_register(request):
             form.save()
             return redirect('alogin')
 
-    return render(request,"Appointment/A-Register.html")
+    return render(request,"appointment/A-Register.html")
 
 def U_login(request):
     formReg = RegisterForm(request.POST or None)
@@ -59,7 +59,7 @@ def U_login(request):
             request.session['username'] = usernames
             return redirect('form')
     
-    return render(request, 'Appointment/U-login.html')
+    return render(request, 'appointment/U-login.html')
 
 
    # return render(request,"Appointment/U-login.html")
@@ -81,7 +81,7 @@ def Form(request):
     context = {
         'allData': listto
     }
-    return render(request,"Appointment/form.html", context)
+    return render(request,"appointment/form.html", context)
 
 def Table(request):
     if request.method == "POST":
@@ -118,7 +118,7 @@ def Table(request):
     context = {
         'data': getData
     }
-    return render(request,"Appointment/Access-Table-View.html", context)
+    return render(request,"appointment/Access-Table-View.html", context)
 
 def generate(request):
     showData = Appointment.objects.all()
@@ -126,12 +126,12 @@ def generate(request):
     context = {
         'showData': showData
     }
-    return render(request,"Appointment/GenerateTable.html", context)
+    return render(request,"appointment/GenerateTable.html", context)
 
 def pdf_appointment_create(request):
     getData = Appointment.objects.all()
 
-    template_path = 'Appointment/GenerateTable.html'
+    template_path = 'appointment/GenerateTable.html'
 
     context = {'showData': getData}
 
@@ -164,7 +164,7 @@ def Table_delete(request, delete_id):
         table_del.delete()
         return redirect('Access-Table-View')
 
-    return render(request, "Appointment/delete_data.html", context)
+    return render(request, "appointment/delete_data.html", context)
 
 def logoutUser(request):
     logout(request)
