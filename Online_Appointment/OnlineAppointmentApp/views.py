@@ -1,4 +1,3 @@
-from pkgutil import get_data
 from django.shortcuts import redirect, render
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -6,14 +5,13 @@ from django.contrib import messages
 from .models import *
 from django.contrib.auth import authenticate, login, logout
 from .forms import *
-import datetime
 from django.core.mail import send_mail
 from django.conf import settings
 from django.template.loader import get_template
 from xhtml2pdf import pisa
 
 def Home(request):
-    return render(request,"appointment/Home.html")
+    return render(request,"Home.html")
 
 def A_login(request):
     if request.user.is_authenticated:
@@ -30,7 +28,7 @@ def A_login(request):
             else:
                 messages.info(request,'Username/Password is incorrect')
 
-    return render(request,"appointment/A-login.html")
+    return render(request,"A-login.html")
 
 def A_register(request):
     form = CreateUserForm()
@@ -41,7 +39,7 @@ def A_register(request):
             form.save()
             return redirect('alogin')
 
-    return render(request,"appointment/A-Register.html")
+    return render(request,"A-Register.html")
 
 def U_login(request):
     formReg = RegisterForm(request.POST or None)
@@ -59,7 +57,7 @@ def U_login(request):
             request.session['username'] = usernames
             return redirect('form')
     
-    return render(request, 'appointment/U-login.html')
+    return render(request, 'U-login.html')
 
 
    # return render(request,"Appointment/U-login.html")
@@ -81,7 +79,7 @@ def Form(request):
     context = {
         'allData': listto
     }
-    return render(request,"appointment/form.html", context)
+    return render(request,"form.html", context)
 
 def Table(request):
     if request.method == "POST":
@@ -108,7 +106,7 @@ def Table(request):
         )
         return render(
             request,
-            'Appointment\Access-Table-View.html',
+            'Access-Table-View.html',
             {
                 'title':'send an email'
             }
@@ -118,7 +116,7 @@ def Table(request):
     context = {
         'data': getData
     }
-    return render(request,"appointment/Access-Table-View.html", context)
+    return render(request,"Access-Table-View.html", context)
 
 def generate(request):
     showData = Appointment.objects.all()
@@ -126,12 +124,12 @@ def generate(request):
     context = {
         'showData': showData
     }
-    return render(request,"appointment/GenerateTable.html", context)
+    return render(request,"GenerateTable.html", context)
 
 def pdf_appointment_create(request):
     getData = Appointment.objects.all()
 
-    template_path = 'appointment/GenerateTable.html'
+    template_path = 'GenerateTable.html'
 
     context = {'showData': getData}
 
@@ -164,7 +162,7 @@ def Table_delete(request, delete_id):
         table_del.delete()
         return redirect('Access-Table-View')
 
-    return render(request, "appointment/delete_data.html", context)
+    return render(request, "delete_data.html", context)
 
 def logoutUser(request):
     logout(request)
